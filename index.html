@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SevaSync AI</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<!-- 🔻 FIXED FOOTER -->
+<div class="footer-fixed">
+  @SevaSync AI
+</div>
+
+<div class="app-container">
+
+  <!-- 🔻 NAVBAR -->
+  <header class="navbar">
+    <div class="nav-left">
+      <div class="logo-container">
+        <h2 class="logo-text">SevaSync AI</h2>
+      </div>
+
+      <nav class="tabs">
+  <span class="tab active" onclick="showPage('homePage', event)">Home</span>
+<span class="tab" onclick="showPage('casesPage', event)">Cases</span>
+<span class="tab" onclick="showPage('volunteersPage', event)">Volunteers</span>
+<span class="tab" onclick="showPage('analyticsPage', event)">Analytics</span>
+<span class="tab" onclick="showPage('supportPage', event)">Support</span>
+</nav>
+
+
+    </div>
+
+    
+
+    <div class="nav-right">
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" placeholder="Search..." />
+      </div>
+
+      <button class="primary-btn">Main Dashboard</button>
+    </div>
+  </header>
+
+
+  <div id="volunteersPage" class="page hidden">
+
+  <div class="card">
+    <h3>👥 Volunteers</h3>
+
+    <div class="vol-grid" id="volList">
+      <!-- JS will fill -->
+    </div>
+
+  </div>
+
+</div>
+
+<div id="analyticsPage" class="page hidden full-page">
+
+  <div class="card">
+    <h3>📊 Analytics</h3>
+
+    <!-- STATS -->
+    <div class="stats">
+      <p>🔥 High: <span id="highCount">0</span></p>
+      <p>⚠️ Medium: <span id="mediumCount">0</span></p>
+      <p>✅ Low: <span id="lowCount">0</span></p>
+      <p>👥 Volunteers: <span id="totalVol">0</span></p>
+    </div>
+
+    <!-- CHARTS -->
+    <canvas id="caseChart" style="margin-top:20px;"></canvas>
+    <canvas id="volChart" style="margin-top:20px;"></canvas>
+    <div id="analyticsLoader" class="loader">Loading Analytics...</div>
+
+  </div>
+
+</div>
+
+  <!-- ================= HOME PAGE ================= -->
+  <div id="homePage" class="page active">
+
+    <div class="content-grid">
+
+      <!-- LEFT -->
+      <div class="main-column">
+
+        <!-- ANALYZER -->
+        <div class="card analyzer-card">
+          <h3>💡 AI Emergency Analyzer</h3>
+          <p>Enter emergency situation</p>
+          <input 
+  type="text" 
+  id="locationInput" 
+  placeholder="Enter location (e.g. Pune, Village Area)" 
+  class="location-input"
+/>
+          <textarea id="input" placeholder="Flood, no food..."></textarea>
+
+          <button class="analyze-btn" onclick="analyze()">Analyze</button>
+        </div>
+
+        <!-- RESULT -->
+        <div id="resultBox" class="card hidden">
+          <h3 id="urgencyText"></h3>
+
+          <p><b>Location:</b> <span id="locationText"></span></p>
+
+          <div id="needsTags" class="pills"></div>
+
+          <p><b>Volunteers:</b> <span id="volText"></span></p>
+
+          <div id="summaryText"></div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT DASHBOARD -->
+      <div class="side-column">
+        <div class="card summary-card">
+
+          <h3>Dashboard</h3>
+
+          <div class="stat-box high">
+            🔥 High Cases <span id="high">0</span>
+          </div>
+
+          <div class="stat-box medium">
+            ⚠️ Medium Cases <span id="medium">0</span>
+          </div>
+
+          <div class="stat-box low">
+            ✅ Low Cases <span id="low">0</span>
+          </div>
+
+          <div class="stat-box total">
+            📊 Total Cases <span id="total">0</span>
+          </div>
+
+          <p class="volunteer-info">
+            👥 Total volunteers needed: <b id="volTotal">0</b>
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ================= CASES PAGE ================= -->
+  <div id="casesPage" class="page hidden">
+
+    <!-- CONTROLS -->
+    <div class="cases-controls">
+
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search cases..." 
+        oninput="applyFilters()" 
+      />
+
+      <div class="filter-buttons">
+        <button onclick="setFilter('All', this)" class="filter-btn active">All</button>
+        <button onclick="setFilter('High', this)" class="filter-btn">High</button>
+        <button onclick="setFilter('Medium', this)" class="filter-btn">Medium</button>
+        <button onclick="setFilter('Low', this)" class="filter-btn">Low</button>
+      </div>
+
+    </div>
+
+    <!-- TABLE -->
+    <div class="card">
+      <h3>📋 All Cases</h3>
+
+      <table class="cases-table">
+        <thead>
+          <tr>
+            <th>Urgency</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Needs</th>
+            <th>Volunteers</th>
+            <th>Status</th>
+            <th>Time</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody id="casesTableBody"></tbody>
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- ✅ ONLY ONE SCRIPT -->
+<script type="module" src="app.js"></script>
+
+</body>
+</html>
